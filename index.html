@@ -17,14 +17,14 @@
     <link rel="stylesheet" href="css/app.css">
   </head>
   
-  <body>
+  <body ng-controller="ToDoController">
     <div class="container">
       <div class="row text-center">
         <div class="col">
           <h1 style="font-size: 100px">ToDo</h1>
         </div>
       </div>
-      <div ng-controller="SendToDo">
+      <div>
         <div class="row justify-content-center">
           <div class="col-8">
             <input type="text" class="form-control" ng-model="toDoText" />
@@ -36,11 +36,11 @@
         <!-- <p>Debug : {{msg}}</p> -->
       </div>
 
-      <div ng-controller="ListToDo" style="margin-top:50px">
+      <div style="margin-top:50px">
         <div ng-repeat="todo in todos">
           <div class="row justify-content-center">
             <div class="col-8">
-              <p> {{todo.daFare}} </p>
+              <p> <img ng-click="deleteToDo(todo.ID)" src="img/x.png"> {{todo.daFare}} </p>
             </div>
             <div class="col-2 text-center">
               <input type="checkbox" />

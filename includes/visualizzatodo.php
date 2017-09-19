@@ -1,7 +1,7 @@
 <?php
 	include 'simpleconn.php';
 	
-	$query = $mysqli->query("SELECT daFare FROM todotable");
+	$query = $mysqli->query("SELECT ID, daFare FROM todotable");
 	
 	if(mysqli_num_rows($query) > 0){
 		while($row = mysqli_fetch_assoc($query)){
