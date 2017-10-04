@@ -10,6 +10,7 @@
         src="https://code.jquery.com/jquery-1.12.4.min.js"
         integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
         crossorigin="anonymous"></script>
+    <script src="js/moment.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/app.js"></script>
@@ -17,38 +18,46 @@
     <link rel="stylesheet" href="css/app.css">
   </head>
   
-  <body ng-controller="ToDoController">
+  <body>
     <div class="container">
+
       <div class="row text-center">
         <div class="col">
           <h1 style="font-size: 100px">ToDo</h1>
         </div>
       </div>
-      <div>
+
+      
+
+      <div ng-controller="InsertToDo">
         <div class="row justify-content-center">
           <div class="col-8">
-            <input type="text" class="form-control" ng-model="toDoText" />
+            <input type="text" class="form-control" ng-model="toDoText" placeholder="Insert a ToDo!" />
           </div>
           <div class="col-2">
-            <button type="button" class="btn btn-success" ng-click="postdata(toDoText)" >Send</button>
+            <button type="button" class="btn btn-primary" ng-click="add(toDoText)" >Send</button>
           </div>
         </div>
         <!-- <p>Debug : {{msg}}</p> -->
       </div>
 
-      <div style="margin-top:50px">
+      <div ng-controller="ListToDo" style="margin-top:50px">
+        <!-- <button class="btn btn-primary" ng-click="reload()">Reload \m/</button> -->
+
         <div ng-repeat="todo in todos">
           <div class="row justify-content-center">
             <div class="col-8">
-              <p> <img ng-click="deleteToDo(todo.ID)" src="img/x.png"> {{todo.daFare}} </p>
+              <span> {{ todo.giorno }} </span>
+              <p> <img src="img/x.png" ng-click="delete(todo.ID, todo)"> {{todo.daFare}} </p>
             </div>
             <div class="col-2 text-center">
-              <input type="checkbox" />
+              <input type="checkbox" ng-true-value="'1'" ng-model="todo.checkin"/>
             </div>
           </div>
         </div>
+
       </div>
+
     </div>
     
   </body>
-</html>

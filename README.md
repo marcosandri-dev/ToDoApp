@@ -2,6 +2,9 @@
 A Simple ToDo App! To make things awesome.
 
 
+v 1.4 -> - Total refactor of the App after several attempts to make it work the angular way. 
+				 - Same exact functionality as before, more or less.
+				 - Ready to be extended and finished, just wanted to do a Commit after a long time.
 v 1.3 -> - I have added a terrible function for deleting ToDos. 
 				 - Did first-hand refactory for To Do List auto-update.
 v 1.2 -> Building the first phase: Putting the first elements, changed html/css framework from Foundation 6.4 to Bootstrap 4, added angular.js and first behaviour mechanisms (insert and read).
