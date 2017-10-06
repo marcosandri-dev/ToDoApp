@@ -4,14 +4,15 @@
 	$postdata = file_get_contents("php://input");
 	$request = json_decode($postdata);	
 	$type = $request->type;
+	$user = $request->user;
 
 	switch ($type){
 		case "getAll":
-			$query = $mysqli->query("SELECT * FROM todotable WHERE checkin=0");
+			$query = $mysqli->query("SELECT * FROM todotable WHERE checkin=0 AND user='$user'");
 			break;
 		
 		case "getLast":
-			$query = $mysqli->query("SELECT * FROM todotable ORDER BY ID DESC LIMIT 1");
+			$query = $mysqli->query("SELECT * FROM todotable WHERE user='$user' ORDER BY ID DESC LIMIT 1");
 			break;
 	}
 
@@ -20,11 +21,10 @@
 		while($row = mysqli_fetch_assoc($query)){
 			$data[] = $row;
 		}
-	} else {
-		echo "0 results";
-	};
-	print json_encode($data);
+		print json_encode($data);
+	}
+	
 	mysqli_close($conn);
-	echo($outp);
+	//echo($outp);
 
 ?>
