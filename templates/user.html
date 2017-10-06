@@ -8,17 +8,19 @@
     </div>
   </div>
   <!-- <p>Debug : {{msg}}</p> -->
-</div>
+</div> 
 
 <div ng-controller="ListToDo" style="margin-top:30px">
   <!-- <button class="btn btn-primary" ng-click="reload()">Reload \m/</button> -->
   
-  <p ng-show="!todos">No Todos!</p>
+  <div class="row justify-content-center">
+    <div class="col-10"><p ng-show="!todos.length">No Todos!</p></div>
+  </div>
   <div ng-repeat="todo in todos" >
     <div class="row justify-content-center">
       <div class="col-8">
         <span> {{ todo.giorno }} </span>
-        <p> <img src="img/x.png" ng-click="delete(todo.ID, todo)"> {{todo.daFare}} </p>
+        <p ng-Dblclick="prova(todo.daFare)"> <img src="img/x.png" ng-click="delete(todo.ID, todo)"> {{todo.daFare}} </p>
       </div>
       <div class="col-2 text-center">
         <input type="checkbox" ng-true-value="'1'" ng-model="todo.checkin"/>
@@ -28,9 +30,9 @@
   
   <hr>
   
-  <div style="margin-bottom:30px; margin-top:30px" class="row justify-content-center">
+  <div ng-controller="Buttons" style="margin-bottom:30px; margin-top:30px" class="row justify-content-center">
     <div class="col-4">
-      <button type="button" class="btn btn-info"><<< Archive </button>
+      <a href="#!/users/{{user}}/archive" class="btn btn-info"><<< Archive </a>
     </div>
     <div class="col-4">
       <button type="button" class="btn btn-success" ng-click="archive()">Complete!</button>

@@ -7,6 +7,7 @@
 	$todo = $request->toDoText;
 	$giorno = $request->giorno;
 	$user = $request->user;
+	$todo = addslashes($todo);
 
 	//$query2 = "INSERT INTO todotable VALUES (NULL, '$todo', 0, 0, $giorno)";
 

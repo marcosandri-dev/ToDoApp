@@ -4,13 +4,18 @@ var app = angular.module("toDo", ["ngRoute"]);
 	//Routing
 	app.config(function($routeProvider) {
 		$routeProvider.when("/users/:userid", {
-										templateUrl : "user.html"
+										templateUrl : "/templates/user.html",
+										controller : "ListToDo"
+									})
+									.when("/users/:userid/archive", {
+										templateUrl : "/templates/archive.html",
+										controller : "ArchiveToDo"
 									})
 									.when("/login", {
-										templateUrl : "login.html"
+										templateUrl : "/templates/login.html"
 									})
 									.when("/sobad", {
-										templateUrl : "sobad.html"
+										templateUrl : "/templates/sobad.html"
 									})
 									.otherwise({redirectTo: "/login"});
 	});
@@ -28,12 +33,17 @@ var app = angular.module("toDo", ["ngRoute"]);
 		var user = $routeParams.userid;
 
 		//Loads the list
-  	this.load = function(){
-  		return $http.post('includes/visualizzatodo.php', {type:"getAll", user:user}).then(function (response){
+  	this.load = function(type){
+  		return $http.post('includes/visualizzatodo.php', {type:type, user:user}).then(function (response){
   			list = response.data;
   			//alert(list + " load");
   		}); 
   		//return list;
+  	}
+
+  	//Reloads the list
+  	this.reload = function(){
+  		$route.reload();
   	}
 
   	//DEBUG/TESTING
@@ -99,14 +109,14 @@ var app = angular.module("toDo", ["ngRoute"]);
 	})
 
 	//List Controller
-	app.controller("ListToDo", function ($scope, ToDoList, $route){
+	app.controller("ListToDo", function ($scope, ToDoList) {
 		
-		//Loads and initaliazes the list
-		ToDoList.load().then(function (result){
+		//Loads and instantiates the list
+		ToDoList.load("getAll").then(function (result){
 			$scope.todos = list;
 		});
 
-		$scope.todos = list;
+		//$scope.todos = list;
 
 		//alert($scope.todos.length);
 
@@ -120,11 +130,11 @@ var app = angular.module("toDo", ["ngRoute"]);
 			});
 		}
 
-		//TESTING
-		$scope.reload = function(){
-			alert(list + " ProvaController");
-			ToDoList.prova();
+		$scope.prova = function(daFare){
+			alert(daFare);
 		}
+
+		
 
 		//Complete the TODOS
 		$scope.archive = function(){
@@ -140,130 +150,33 @@ var app = angular.module("toDo", ["ngRoute"]);
 			} else {
 				alert("No ToDos checked...");
 			}
-			$route.reload();
+			$toDoList.reload();
 		}
 
+		//TESTING
+		$scope.test = function(){
+			ToDoList.prova();
+		}
+
+	});
+
+	//Archive Controller
+	app.controller("ArchiveToDo", function ($scope, ToDoList) {
+		//Loads and istantiets the archive
+		ToDoList.load("getArchive").then(function (result){
+			$scope.archive = list;
+		});
+
+	});
+
+	//Button Controller
+	app.controller("Buttons", function ($scope, $routeParams) {
+		$scope.user = $routeParams.userid;
 	});
 
 	//Login Controller
 	app.controller("Login", function ($scope, $routeParams) {
 		// :) 
-
+		//do i Need this?
 	});
 
-	//
-
-	//.service("toDoList", function ($http, $q) {
-
-		//var deferred = $q.defer();
-
-		//Insert a ToDo
-	/*	this.addToDo = function(toDo) {
-			var data = {
-				toDoText: toDo,
-				giorno: moment().format('L')
-			};
-			return $http.post('includes/inserttodo.php', JSON.stringify(data)).then(function (response) {
-				deferred.resolve(response.data);
-				return deferred.promise;
-			});
-		} */
-
-		//Prints all the ToDos
-	/*	this.printToDo = function(){
-			//var list = [];
-			return $http.get('includes/visualizzatodo.php').then(function(response) {
-				deferred.resolve(response.data);
-				return deferred.promise;
-			});
-		}
-		//Edit a Todo
-		//Delete a ToDo
-		//Check the ToDo
-		//Archive the ToDos
-	})*/
-
-
-/*.controller('ToDoController', function ($scope, $http){
-	
-
-	//Init
-	$scope.toDoText = null;
-
-	//Prints all the Todos
-	$scope.listToDo = function(){
-		$http.get('includes/visualizzatodo.php').then(function(response) {
-      $scope.todos = response.data;
-		});
-	};
-
-	$scope.listToDo(); //This is not nice, how to automatically call the function? 
-
-	//Just for testing.
-	$scope.prova = function(){
-		var b = moment().format('MM/DD/YYYY');
-	};
-
-	//Horrible function, for testing&commit sake.
-	$scope.deleteToDo = function(ID){
-		var data = {
-			ID: ID
-		};
-		$http.post('includes/deletetodo.php', JSON.stringify(data)).then(function (response) {
-			if (response.data){
-				$scope.listToDo(); //This is not nice, how to automatically call the function? 
-			}
-		}, function (response) {
-			$scope.msg = "Not Working";
-		});
-	}
-
-	//Inserts a new todo
-	$scope.postdata = function(toDoText) {
-
-		var data = {
-			toDoText: toDoText,
-			giorno: moment().format('L')
-		};
-		//alert(JSON.stringify(data)); //DEBUG
-
-		$http.post('includes/inserttodo.php', JSON.stringify(data)).then(function (response) {
-			if (response.data){
-				//$scope.msg = response.data; //DEBUG
-				$scope.listToDo(); //This is not nice, how to automatically call the function? 
-				$scope.toDoText = null; //I think that's ok...
-			}
-		}, function (response) {
-			$scope.msg = "Not Working";
-		});
-	};
-
-	//Changes the checked status
-	$scope.checked = function(ID, checkin){
-		alert("boh");
-		var data = {
-			ID: ID,
-			checkin: checkin
-		};
-
-		if (data.checkin == 0){
-			data.checkin = 1;
-			alert("SI");
-		} else {
-			data.checkin = 0;
-			alert("NO");
-		}
-
-		$http.post('includes/edittodo.php', JSON.stringify(data)).then(function (response){
-			if (response.data){
-				alert("gratz!");
-			}
-		});
-	};
-
-	$scope.checked2 = function(checkin){
-			alert("change");
-	};
-
-
-});*/

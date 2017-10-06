@@ -2,10 +2,15 @@
 A Simple ToDo App! To make things awesome.
 
 
-v 1.5 -> -Added Complete! Function, to put in archive completed ToDos.
-				 -Added Routing and "login", now who uses this app have its space.
-				 -Bug fixing as always, especially one who created problems with empty lists
-				 -It can be now used! But still incomplete, next will be better.
+
+v 1.6 -> - Added Archive to display the completed ToDos.
+				 - Added an easter egg.
+				 - Bug fixing, as always.
+				 - Some little refactor.
+v 1.5 -> - Added Complete! Function, to put in archive completed ToDos.
+				 - Added Routing and "login", now who uses this app have its space.
+				 - Bug fixing as always, especially one who created problems with empty lists
+				 - It can be now used! But still incomplete, next will be better.
 v 1.4 -> - Total refactor of the App after several attempts to make it work the angular way. 
 				 - Same exact functionality as before, more or less.
 				 - Ready to be extended and finished, just wanted to do a Commit after a long time.

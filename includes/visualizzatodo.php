@@ -14,6 +14,11 @@
 		case "getLast":
 			$query = $mysqli->query("SELECT * FROM todotable WHERE user='$user' ORDER BY ID DESC LIMIT 1");
 			break;
+
+		case "getArchive":
+			$query = $mysqli->query("SELECT * FROM todotable WHERE user='$user' AND checkin=1");
+			break;
+
 	}
 
 
