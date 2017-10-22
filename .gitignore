@@ -1,3 +1,4 @@
 
 sftp-config.json
 includes/simpleconn.php
+*.sublime-workspace

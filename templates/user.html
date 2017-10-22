@@ -1,14 +1,14 @@
-<div ng-controller="InsertToDo">
+<form ng-controller="InsertToDo" ng-submit="add(toDoText)">
   <div class="row justify-content-center">
     <div class="col-8"> 
       <input type="text" class="form-control" ng-model="toDoText" placeholder="Insert a ToDo!" />
     </div>
     <div class="col-2">
       <button type="button" class="btn btn-primary" ng-click="add(toDoText)" >Add</button>
-    </div>
+    </div> 
   </div>
   <!-- <p>Debug : {{msg}}</p> -->
-</div> 
+</form> 
 
 <div ng-controller="ListToDo" style="margin-top:30px">
   <!-- <button class="btn btn-primary" ng-click="reload()">Reload \m/</button> -->
@@ -16,16 +16,27 @@
   <div class="row justify-content-center">
     <div class="col-10"><p ng-show="!todos.length">No Todos!</p></div>
   </div>
+
   <div ng-repeat="todo in todos" >
-    <div class="row justify-content-center">
-      <div class="col-8">
+    <div ng-hide="edit" ng-init="edit = 0" class="row justify-content-center align-items-center">
+      <div ondblclick="giveFocus()" class="col-8">
         <span> {{ todo.giorno }} </span>
-        <p ng-Dblclick="prova(todo.daFare)"> <img src="img/x.png" ng-click="delete(todo.ID, todo)"> {{todo.daFare}} </p>
+        <p ng-Dblclick="edit = 1"> <img src="img/x.png" ng-click="delete(todo.ID, todo)"> {{todo.daFare}} </p>
       </div>
       <div class="col-2 text-center">
         <input type="checkbox" ng-true-value="'1'" ng-model="todo.checkin"/>
       </div>
     </div>
+  
+    <form ng-submit="editText(todo.ID, editedToDo)" ng-show="edit" class="row align-items-end justify-content-center">
+      <div class="col-8">
+        Edit To Do: <input ng-init="" class="form-control getFocus" ng-model="editedToDo" placeholder="{{todo.daFare}}" autofocus ng-blur="edit = 0" />
+      </div>
+      <div class="col-2">
+        <button type="button" class="btn btn-info" ng-mousedown="editText(todo.ID, editedToDo)">Edit</button>
+      </div>
+    </form>
+  
   </div>
   
   <hr>
@@ -39,4 +50,27 @@
     </div>
   </div>
   
+</div>
+
+
+
+
+<div id="deleteModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm delete</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete the <span id="deleteToDotext"></span> ToDo?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-alert">Yes</button>
+        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+      </div>
+
+    </div>
+  </div>
 </div>
