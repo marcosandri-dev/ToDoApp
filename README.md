@@ -2,7 +2,10 @@
 A Simple ToDo App! To make things awesome.
 
 
-
+v 1.7 -> - Added Edit function.
+				 - Added some form control.
+				 - Bug fixing, last version was broken. There are still some issues, sometimes it brokes.
+				 - This is almost the final version.
 v 1.6 -> - Added Archive to display the completed ToDos.
 				 - Added an easter egg.
 				 - Bug fixing, as always.
